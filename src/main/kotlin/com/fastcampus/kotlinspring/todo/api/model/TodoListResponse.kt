@@ -14,7 +14,9 @@ data class TodoListResponse(
     fun get(index: Int) = items[index]
 
     companion object {
-        fun of(todoList: List<Todo>) =
-            TodoListResponse(todoList.map(TodoResponse::of))
+        fun of(todoList: List<Todo>){
+            TodoListResponse(todoList.map { TodoResponse.of(it) })
+        }
     }
+
 }
