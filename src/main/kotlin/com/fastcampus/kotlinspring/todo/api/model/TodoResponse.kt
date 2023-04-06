@@ -1,7 +1,6 @@
 package com.fastcampus.kotlinspring.todo.api.model
 
 import com.fastcampus.kotlinspring.todo.domain.Todo
-import org.springframework.util.Assert
 import java.time.LocalDateTime
 
 data class TodoResponse(
@@ -10,19 +9,19 @@ data class TodoResponse(
         val description :String,
         val done : Boolean,
         val createdAt: LocalDateTime,
-        val updatedAt: LocalDateTime?,
+        val modifiedAt: LocalDateTime?,
 ) {
     companion object {
-        fun of(todo: Todo): TodoResponse {
-            checkNotNull(todo.id)
+        fun of(todo: Todo?): TodoResponse {
+            checkNotNull(todo)
 
             return TodoResponse(
-                    id = todo.id,
+                    id = todo.id!!,
                     title = todo.title,
                     description = todo.description,
                     done = todo.done,
                     createdAt = todo.createdAt,
-                    updatedAt = todo.updatedAt
+                    modifiedAt = todo.modifiedAt
             )
         }
     }

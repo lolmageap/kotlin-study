@@ -4,7 +4,7 @@ import com.fastcampus.kotlinspring.todo.domain.Todo
 import com.fastcampus.kotlinspring.todo.domain.TodoRepository
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -18,36 +18,36 @@ class TodoServiceTests {
     @MockkBean
     lateinit var repository: TodoRepository
 
-    lateinit var service: TodoService
+    private lateinit var service: TodoService
 
     val stub: Todo by lazy {
         Todo(
-            id = 1,
-            title = "테스트",
-            description = "테스트 상세",
-            done = false,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now(),
+                id = 1L,
+                title = "테스트",
+                description = "테스트 상세",
+                done = false,
+                createdAt = LocalDateTime.now(),
+                modifiedAt = LocalDateTime.now(),
         )
     }
 
     @BeforeEach
-    fun setUp() {
+    fun setUp() : Unit {
         service = TodoService(repository)
     }
 
-
     @Test
-    fun `한개의 TODO를 반환해야한다`() {
-        // Given
+    fun `한개의 TODO를 반환해야한다`(){
+        //Given
         every { repository.findByIdOrNull(1L) } returns stub
 
-        // When
+        //When
         val actual = service.findById(1L)
 
-        // Then
+        //Then
         assertThat(actual).isNotNull
         assertThat(actual).isEqualTo(stub)
+
     }
 
 }
